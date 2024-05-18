@@ -7,7 +7,9 @@ import java.util.List;
 public class MapEngine {
   private List<Country> countryList = new ArrayList<Country>();
   private boolean validCountryName;
-  private Graph graph;
+  private Graph graph = new Graph();
+  private Country fixedCountry;
+  private Country adjCountry;
 
   public MapEngine() {
     // add other code here if you want
@@ -23,7 +25,25 @@ public class MapEngine {
       String[] countryParts = string.split(",");
       Country country = new Country(countryParts[0], countryParts[1], countryParts[2]);
       countryList.add(country);
-      // graph.addNode(country);
+      graph.addNode(country);
+    }
+
+    for (String string : adjacencies) {
+      String[] adjParts = string.split(",");
+      for (Country country : countryList) {
+        if (country.getName().equals(adjParts[0])) {
+          fixedCountry = country;
+        }
+      }
+
+      for (int i = 0; i < adjParts.length; i++) {
+        for (Country country : countryList) {
+          if (country.getName().equals(adjParts[i])) {
+            adjCountry = country;
+            graph.addEdge(fixedCountry, adjCountry);
+          }
+        }
+      }
     }
   }
 
@@ -89,6 +109,5 @@ public class MapEngine {
         destination = Utils.scanner.nextLine();
       }
     }
-
   }
 }

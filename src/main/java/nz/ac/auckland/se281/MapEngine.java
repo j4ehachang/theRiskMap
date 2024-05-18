@@ -5,8 +5,9 @@ import java.util.List;
 
 /** This class is the main entry point. */
 public class MapEngine {
-  List<Country> countryList = new ArrayList<Country>();
-  boolean validCountryName;
+  private List<Country> countryList = new ArrayList<Country>();
+  private boolean validCountryName;
+  private Graph graph;
 
   public MapEngine() {
     // add other code here if you want
@@ -22,6 +23,7 @@ public class MapEngine {
       String[] countryParts = string.split(",");
       Country country = new Country(countryParts[0], countryParts[1], countryParts[2]);
       countryList.add(country);
+      // graph.addNode(country);
     }
   }
 

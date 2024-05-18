@@ -14,13 +14,15 @@ public class MapEngine {
   private void loadMap() {
     List<String> countries = Utils.readCountries();
     List<String> adjacencies = Utils.readAdjacencies();
-    // add code here to create your data structures
+
+    for (String string : countries) {
+      String[] countryParts = string.split(",");
+      Country country = new Country(countryParts[0], countryParts[1], countryParts[2]);
+    }
   }
 
   /** this method is invoked when the user run the command info-country. */
-  public void showInfoCountry() {
-    // add code here
-  }
+  public void showInfoCountry() {}
 
   /** this method is invoked when the user run the command route. */
   public void showRoute() {}

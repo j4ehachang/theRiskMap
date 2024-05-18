@@ -11,4 +11,17 @@ public class Country {
     this.continent = continent;
     this.taxFee = taxFee;
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getContinent() {
+    return continent;
+  }
+
+  public String getTaxFee() {
+    return taxFee;
+  }
+
 }

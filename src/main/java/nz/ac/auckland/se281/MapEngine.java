@@ -6,7 +6,7 @@ import java.util.List;
 /** This class is the main entry point. */
 public class MapEngine {
   List<Country> countryList = new ArrayList<Country>();
-  boolean validCountryName = false;
+  boolean validCountryName;
 
   public MapEngine() {
     // add other code here if you want
@@ -30,6 +30,7 @@ public class MapEngine {
     MessageCli.INSERT_COUNTRY.printMessage();
     String input = Utils.scanner.nextLine();
 
+    validCountryName = false;
     while (validCountryName == false) {
       try {
         countryNameValid(input);
@@ -58,5 +59,34 @@ public class MapEngine {
   }
 
   /** this method is invoked when the user run the command route. */
-  public void showRoute() {}
+  public void showRoute() {
+    MessageCli.INSERT_SOURCE.printMessage();
+    String start = Utils.scanner.nextLine();
+
+    validCountryName = false;
+    while (validCountryName == false) {
+      try {
+        countryNameValid(start);
+        validCountryName = true;
+      } catch (InvalidCountryName e) {
+        MessageCli.INVALID_COUNTRY.printMessage(Utils.capitalizeFirstLetterOfEachWord(start));
+        start = Utils.scanner.nextLine();
+      }
+    }
+
+    MessageCli.INSERT_DESTINATION.printMessage();
+    String destination = Utils.scanner.nextLine();
+
+    validCountryName = false;
+    while (validCountryName == false) {
+      try {
+        countryNameValid(destination);
+        validCountryName = true;
+      } catch (InvalidCountryName e) {
+        MessageCli.INVALID_COUNTRY.printMessage(Utils.capitalizeFirstLetterOfEachWord(destination));
+        destination = Utils.scanner.nextLine();
+      }
+    }
+
+  }
 }

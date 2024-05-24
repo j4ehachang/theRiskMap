@@ -128,13 +128,13 @@ public class MapEngine {
 
     countryPath = graph.findShortestPath(startCountry, endCountry);
 
-    // if (countryPath == null) {
-    //   System.out.println("SOMETHING WRONG");
-    //   return;
-    // }
+    if (countryPath == null) {
+      System.out.println("SOMETHING WRONG");
+      return;
+    }
 
-    // for (Country country : countryPath) {
-    //   System.out.println(country);
-    // }
+    for (Country country : countryPath) {
+      System.out.println(country);
+    }
   }
 }

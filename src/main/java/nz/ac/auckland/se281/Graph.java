@@ -1,6 +1,7 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,26 +37,40 @@ public class Graph {
     adjNodes.getOrDefault(node2, new ArrayList<>()).remove(node1);
   }
 
-  public List<Country> findShortestPath(Country root) {
-    if (!adjNodes.containsKey(root)) {
-      return null; // Start node not present in the graph
-    }
-
+  public List<Country> findShortestPath(Country start, Country destination) {
     List<Country> visited = new ArrayList<>();
     Queue<Country> queue = new LinkedList<>();
     Map<Country, Country> parentMap = new HashMap<>();
+    List<Country> cyclePath = new ArrayList<>();
 
-    queue.add(root);
-    visited.add(root);
+    if (!adjNodes.containsKey(start)) {
+      return null; // Start node not present in the graph
+    }
+
+    queue.add(start);
+    visited.add(start);
+    parentMap.put(start, null);
+
     while (!queue.isEmpty()) {
-      Country node = queue.poll();
-      for (Country n : adjNodes.get(node)) {
-        if (!visited.contains(n)) {
-          visited.add(n);
-          queue.add(n);
+      Country current = queue.poll();
+
+      for (Country neighbor : adjNodes.get(current)) {
+        if (!visited.contains(neighbor)) {
+          visited.add(neighbor);
+          queue.add(neighbor);
+          parentMap.put(neighbor, current);
+        } else if (current.equals(destination)) {
+
+          Country node = current;
+          while (node != null) {
+            cyclePath.add(node);
+            node = parentMap.get(node);
+          }
+          Collections.reverse(cyclePath);
+          return cyclePath;
         }
       }
     }
-    return visited;
+    return null;
   }
 }

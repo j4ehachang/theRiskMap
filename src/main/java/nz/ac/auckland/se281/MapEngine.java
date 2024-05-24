@@ -1,15 +1,20 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /** This class is the main entry point. */
 public class MapEngine {
   private List<Country> countryList = new ArrayList<Country>();
   private boolean validCountryName;
   private Graph graph = new Graph();
+  private Country startCountry;
+  private Country endCountry;
+  private List<Country> countryPath = new ArrayList<>();
+  private Map<String, Country> countryMap = new HashMap<>();
   private Country fixedCountry;
-  private Country adjCountry;
 
   public MapEngine() {
     // add other code here if you want
@@ -26,23 +31,15 @@ public class MapEngine {
       Country country = new Country(countryParts[0], countryParts[1], countryParts[2]);
       countryList.add(country);
       graph.addNode(country);
+      countryMap.putIfAbsent(country.getName(), country);
     }
 
     for (String string : adjacencies) {
       String[] adjParts = string.split(",");
-      for (Country country : countryList) {
-        if (country.getName().equals(adjParts[0])) {
-          fixedCountry = country;
-        }
-      }
+      fixedCountry = countryMap.get(adjParts[0]);
 
-      for (int i = 0; i < adjParts.length; i++) {
-        for (Country country : countryList) {
-          if (country.getName().equals(adjParts[i])) {
-            adjCountry = country;
-            graph.addEdge(fixedCountry, adjCountry);
-          }
-        }
+      for (int i = 1; i < adjParts.length; i++) {
+        graph.addEdge(fixedCountry, countryMap.get(adjParts[i]));
       }
     }
   }
@@ -90,10 +87,10 @@ public class MapEngine {
       try {
         countryNameValid(start);
         validCountryName = true;
+        start = Utils.capitalizeFirstLetterOfEachWord(start);
       } catch (InvalidCountryName e) {
         MessageCli.INVALID_COUNTRY.printMessage(Utils.capitalizeFirstLetterOfEachWord(start));
         start = Utils.scanner.nextLine();
-        start = Utils.capitalizeFirstLetterOfEachWord(start);
       }
     }
 
@@ -105,15 +102,39 @@ public class MapEngine {
       try {
         countryNameValid(destination);
         validCountryName = true;
+        destination = Utils.capitalizeFirstLetterOfEachWord(destination);
       } catch (InvalidCountryName e) {
         MessageCli.INVALID_COUNTRY.printMessage(Utils.capitalizeFirstLetterOfEachWord(destination));
         destination = Utils.scanner.nextLine();
-        destination = Utils.capitalizeFirstLetterOfEachWord(destination);
       }
     }
 
-    if(start.equals(destination)){
+    if (start.equals(destination)) {
       MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
+      return;
     }
+
+    // Assign the corresponding countries to the given inputs by user
+    for (Country country : countryList) {
+      if (start.equals(country.getName())) {
+        startCountry = country;
+      }
+    }
+    for (Country country : countryList) {
+      if (destination.equals(country.getName())) {
+        endCountry = country;
+      }
+    }
+
+    countryPath = graph.findShortestPath(startCountry, endCountry);
+
+    // if (countryPath == null) {
+    //   System.out.println("SOMETHING WRONG");
+    //   return;
+    // }
+
+    // for (Country country : countryPath) {
+    //   System.out.println(country);
+    // }
   }
 }

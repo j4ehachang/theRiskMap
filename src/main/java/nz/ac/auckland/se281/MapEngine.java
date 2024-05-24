@@ -15,6 +15,7 @@ public class MapEngine {
   private List<Country> countryPath = new ArrayList<>();
   private Map<String, Country> countryMap = new HashMap<>();
   private Country fixedCountry;
+  private String route;
 
   public MapEngine() {
     // add other code here if you want
@@ -128,13 +129,15 @@ public class MapEngine {
 
     countryPath = graph.findShortestPath(startCountry, endCountry);
 
-    if (countryPath == null) {
-      System.out.println("SOMETHING WRONG");
-      return;
+    route = "";
+    for (Country country : countryPath) {
+      if (!country.equals(countryPath.get(countryPath.size() - 1 ))) {
+        route += (country.getName() + ", ");
+      } else {
+        route += (country.getName());
+      }
     }
 
-    for (Country country : countryPath) {
-      System.out.println(country);
-    }
+    MessageCli.ROUTE_INFO.printMessage("[" + route + "]");
   }
 }

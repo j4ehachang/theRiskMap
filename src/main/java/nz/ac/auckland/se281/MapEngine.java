@@ -93,6 +93,7 @@ public class MapEngine {
       } catch (InvalidCountryName e) {
         MessageCli.INVALID_COUNTRY.printMessage(Utils.capitalizeFirstLetterOfEachWord(start));
         start = Utils.scanner.nextLine();
+        start = Utils.capitalizeFirstLetterOfEachWord(start);
       }
     }
 
@@ -107,7 +108,12 @@ public class MapEngine {
       } catch (InvalidCountryName e) {
         MessageCli.INVALID_COUNTRY.printMessage(Utils.capitalizeFirstLetterOfEachWord(destination));
         destination = Utils.scanner.nextLine();
+        destination = Utils.capitalizeFirstLetterOfEachWord(destination);
       }
+    }
+
+    if(start.equals(destination)){
+      MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
     }
   }
 }

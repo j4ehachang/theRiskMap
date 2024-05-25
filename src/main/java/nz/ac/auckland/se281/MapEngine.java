@@ -18,6 +18,7 @@ public class MapEngine {
   private String route;
   private List<String> continentList = new ArrayList<>();
   private String continentRoute;
+  private int totalTax;
 
   public MapEngine() {
     // add other code here if you want
@@ -131,6 +132,7 @@ public class MapEngine {
 
     countryPath = graph.findShortestPath(startCountry, endCountry);
 
+    totalTax = 0;
     route = "";
     for (Country country : countryPath) {
       if (!country.equals(countryPath.get(countryPath.size() - 1 ))) {
@@ -141,7 +143,11 @@ public class MapEngine {
 
       if(!continentList.contains(country.getContinent())) {
         continentList.add(country.getContinent());
-      }      
+      }
+      
+      if(!country.equals(countryPath.get(0))) {
+        totalTax += Integer.parseInt(country.getTaxFee());
+      }
     }
 
     MessageCli.ROUTE_INFO.printMessage("[" + route + "]");
@@ -157,5 +163,7 @@ public class MapEngine {
     }
 
     MessageCli.CONTINENT_INFO.printMessage("[" + continentRoute + "]");
+
+    MessageCli.TAX_INFO.printMessage(Integer.toString(totalTax));
   }
 } 

@@ -16,6 +16,8 @@ public class MapEngine {
   private Map<String, Country> countryMap = new HashMap<>();
   private Country fixedCountry;
   private String route;
+  private List<String> continentList = new ArrayList<>();
+  private String continentRoute;
 
   public MapEngine() {
     // add other code here if you want
@@ -136,8 +138,24 @@ public class MapEngine {
       } else {
         route += (country.getName());
       }
+
+      if(!continentList.contains(country.getContinent())) {
+        continentList.add(country.getContinent());
+      }      
     }
 
     MessageCli.ROUTE_INFO.printMessage("[" + route + "]");
+
+
+    continentRoute = "";
+    for (String continent : continentList) {
+      if (!continent.equals(continentList.get(continentList.size()-1))) {
+        continentRoute += (continent + ", ");
+      } else {
+        continentRoute += (continent);
+      }
+    }
+
+    MessageCli.CONTINENT_INFO.printMessage("[" + continentRoute + "]");
   }
-}
+} 

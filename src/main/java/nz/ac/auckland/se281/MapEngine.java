@@ -30,6 +30,7 @@ public class MapEngine {
     List<String> countries = Utils.readCountries();
     List<String> adjacencies = Utils.readAdjacencies();
 
+    // Go through the file to create an instance for each country
     for (String string : countries) {
       String[] countryParts = string.split(",");
       Country country = new Country(countryParts[0], countryParts[1], countryParts[2]);
@@ -38,6 +39,7 @@ public class MapEngine {
       countryMap.putIfAbsent(country.getName(), country);
     }
 
+    // Go through the files and add all the countries and their adjacent countries to the graph
     for (String string : adjacencies) {
       String[] adjParts = string.split(",");
       fixedCountry = countryMap.get(adjParts[0]);
@@ -53,6 +55,7 @@ public class MapEngine {
     MessageCli.INSERT_COUNTRY.printMessage();
     String input = Utils.scanner.nextLine();
 
+    // Throw an exception when the country given by the user is invalid
     validCountryName = false;
     while (validCountryName == false) {
       try {
@@ -64,6 +67,7 @@ public class MapEngine {
       }
     }
 
+    // Find the country that matches the name with input and print info
     for (Country country : countryList) {
       if (Utils.capitalizeFirstLetterOfEachWord(input).equals(country.getName())) {
         MessageCli.COUNTRY_INFO.printMessage(
@@ -72,6 +76,12 @@ public class MapEngine {
     }
   }
 
+  /**
+   * This method is used to check whether a string is a valid country name.
+   *
+   * @param name String for the name of the country.
+   * @throws InvalidCountryName Exception type for when invalid name is given.
+   */
   public void countryNameValid(String name) throws InvalidCountryName {
     for (Country country : countryList) {
       if (Utils.capitalizeFirstLetterOfEachWord(name).equals(country.getName())) {
@@ -86,6 +96,7 @@ public class MapEngine {
     MessageCli.INSERT_SOURCE.printMessage();
     String start = Utils.scanner.nextLine();
 
+    // Check if start country name is valid
     validCountryName = false;
     while (validCountryName == false) {
       try {
@@ -101,6 +112,7 @@ public class MapEngine {
     MessageCli.INSERT_DESTINATION.printMessage();
     String destination = Utils.scanner.nextLine();
 
+    // Check if destination country is valid
     validCountryName = false;
     while (validCountryName == false) {
       try {
@@ -134,28 +146,30 @@ public class MapEngine {
 
     totalTax = 0;
     route = "";
+
+    // Update the infomation about the countries on the route and their taxfees
     for (Country country : countryPath) {
-      if (!country.equals(countryPath.get(countryPath.size() - 1 ))) {
+      if (!country.equals(countryPath.get(countryPath.size() - 1))) {
         route += (country.getName() + ", ");
       } else {
         route += (country.getName());
       }
 
-      if(!continentList.contains(country.getContinent())) {
+      if (!continentList.contains(country.getContinent())) {
         continentList.add(country.getContinent());
       }
-      
-      if(!country.equals(countryPath.get(0))) {
+
+      if (!country.equals(countryPath.get(0))) {
         totalTax += Integer.parseInt(country.getTaxFee());
       }
     }
 
     MessageCli.ROUTE_INFO.printMessage("[" + route + "]");
 
-
+    // Get all of the continents visited in the route
     continentRoute = "";
     for (String continent : continentList) {
-      if (!continent.equals(continentList.get(continentList.size()-1))) {
+      if (!continent.equals(continentList.get(continentList.size() - 1))) {
         continentRoute += (continent + ", ");
       } else {
         continentRoute += (continent);
@@ -166,4 +180,4 @@ public class MapEngine {
 
     MessageCli.TAX_INFO.printMessage(Integer.toString(totalTax));
   }
-} 
+}

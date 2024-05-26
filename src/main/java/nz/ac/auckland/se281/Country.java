@@ -23,25 +23,25 @@ public class Country {
   /**
    * This method returns the name of the country.
    *
-   * @return return the string for the name.
+   * @return the string for the name of the country.
    */
   public String getName() {
     return name;
   }
 
   /**
-   * This method returns the continent.
+   * This method returns the continent of the conutry.
    *
-   * @return returns the string for the continent.
+   * @return the string for the continent of the country.
    */
   public String getContinent() {
     return continent;
   }
 
   /**
-   * This method returns the taxfee.
+   * This method returns the taxfee of the country.
    *
-   * @return returns string for taxfee.
+   * @return string for taxfee of the country.
    */
   public String getTaxFee() {
     return taxFee;
@@ -57,13 +57,22 @@ public class Country {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (getClass() != obj.getClass()) return false;
+    // Check if the countries are equal by checking their names
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
     Country other = (Country) obj;
     if (name == null) {
       if (other.name != null) return false;
-    } else if (!name.equals(other.name)) return false;
+    } else if (!name.equals(other.name)) {
+      return false;
+    }
     return true;
   }
 }

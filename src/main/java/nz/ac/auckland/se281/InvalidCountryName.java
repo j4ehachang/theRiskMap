@@ -16,7 +16,7 @@ public class InvalidCountryName extends Exception {
   }
 
   /**
-   * Returns the country name.
+   * Returns the country name that is given by the user.
    *
    * @return the country name.
    */

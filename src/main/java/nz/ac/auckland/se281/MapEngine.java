@@ -15,9 +15,9 @@ public class MapEngine {
   private List<Country> countryPath = new ArrayList<>();
   private Map<String, Country> countryMap = new HashMap<>();
   private Country fixedCountry;
-  private String route;
+  private StringBuilder route = new StringBuilder();
   private List<String> continentList = new ArrayList<>();
-  private String continentRoute;
+  private StringBuilder continentRoute = new StringBuilder();
   private int totalTax;
 
   public MapEngine() {
@@ -145,14 +145,13 @@ public class MapEngine {
     countryPath = graph.findShortestPath(startCountry, endCountry);
 
     totalTax = 0;
-    route = "";
 
     // Update the infomation about the countries on the route and their taxfees
     for (Country country : countryPath) {
       if (!country.equals(countryPath.get(countryPath.size() - 1))) {
-        route += (country.getName() + ", ");
+        route.append(country.getName() + ", ");
       } else {
-        route += (country.getName());
+        route.append(country.getName());
       }
 
       if (!continentList.contains(country.getContinent())) {
@@ -167,12 +166,11 @@ public class MapEngine {
     MessageCli.ROUTE_INFO.printMessage("[" + route + "]");
 
     // Get all of the continents visited in the route
-    continentRoute = "";
     for (String continent : continentList) {
       if (!continent.equals(continentList.get(continentList.size() - 1))) {
-        continentRoute += (continent + ", ");
+        continentRoute.append(continent + ", ");
       } else {
-        continentRoute += (continent);
+        continentRoute.append(continent);
       }
     }
 

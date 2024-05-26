@@ -12,7 +12,7 @@ import java.util.Queue;
 public class Graph {
   private Map<Country, List<Country>> adjNodes;
 
-  /** Constructor for the graph class. */
+  /** This method is the constructor for the graph class. */
   public Graph() {
     this.adjNodes = new HashMap<>();
   }
@@ -20,7 +20,7 @@ public class Graph {
   /**
    * This method adds a node to the graph.
    *
-   * @param node a country.
+   * @param node an instance of a country that we want to add to the graph.
    */
   public void addNode(Country node) {
     adjNodes.putIfAbsent(node, new ArrayList<>());
@@ -29,8 +29,8 @@ public class Graph {
   /**
    * This method adds an edge to the graph.
    *
-   * @param node1 country one.
-   * @param node2 country two.
+   * @param node1 The first country in the edge.
+   * @param node2 The second country in the edge.
    */
   public void addEdge(Country node1, Country node2) {
     addNode(node1);

@@ -69,7 +69,9 @@ public class Country {
     }
     Country other = (Country) obj;
     if (name == null) {
-      if (other.name != null) return false;
+      if (other.name != null) {
+        return false;
+      }
     } else if (!name.equals(other.name)) {
       return false;
     }

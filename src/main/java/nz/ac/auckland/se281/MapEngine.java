@@ -94,7 +94,7 @@ public class MapEngine {
   /** this method is invoked when the user run the command route. */
   public void showRoute() {
     MessageCli.INSERT_SOURCE.printMessage();
-    String start = Utils.scanner.nextLine();
+    String start = Utils.capitalizeFirstLetterOfEachWord(Utils.scanner.nextLine());
 
     // Check if start country name is valid
     validCountryName = false;
@@ -102,15 +102,14 @@ public class MapEngine {
       try {
         countryNameValid(start);
         validCountryName = true;
-        start = Utils.capitalizeFirstLetterOfEachWord(start);
       } catch (InvalidCountryName e) {
-        MessageCli.INVALID_COUNTRY.printMessage(Utils.capitalizeFirstLetterOfEachWord(start));
-        start = Utils.scanner.nextLine();
+        MessageCli.INVALID_COUNTRY.printMessage(start);
+        start = Utils.capitalizeFirstLetterOfEachWord(Utils.scanner.nextLine());
       }
     }
 
     MessageCli.INSERT_DESTINATION.printMessage();
-    String destination = Utils.scanner.nextLine();
+    String destination = Utils.capitalizeFirstLetterOfEachWord(Utils.scanner.nextLine());
 
     // Check if destination country is valid
     validCountryName = false;
@@ -118,10 +117,9 @@ public class MapEngine {
       try {
         countryNameValid(destination);
         validCountryName = true;
-        destination = Utils.capitalizeFirstLetterOfEachWord(destination);
       } catch (InvalidCountryName e) {
-        MessageCli.INVALID_COUNTRY.printMessage(Utils.capitalizeFirstLetterOfEachWord(destination));
-        destination = Utils.scanner.nextLine();
+        MessageCli.INVALID_COUNTRY.printMessage(destination);
+        destination = Utils.capitalizeFirstLetterOfEachWord(Utils.scanner.nextLine());
       }
     }
 
